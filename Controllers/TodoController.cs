@@ -12,7 +12,7 @@ namespace MeuTodo.Controllers
     {
         [HttpGet]
         [Route("todos")]
-        [ProducesResponseType(200, Type = typeof(List<Todo>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Todo>))]
         public async Task<IActionResult> GetAsync(
             [FromServices] AppDbContext context)
         {
@@ -25,8 +25,10 @@ namespace MeuTodo.Controllers
 
         [HttpGet]
         [Route("todos/{id}")]
-        [ProducesResponseType(200, Type = typeof(List<Todo>))]
-        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Todo>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         public async Task<IActionResult> GetByIdAsync(
             [FromServices] AppDbContext context,
             [FromRoute] int id)
@@ -40,8 +42,8 @@ namespace MeuTodo.Controllers
 
         [HttpPost]
         [Route("todos")]
-        [ProducesResponseType(200, Type = typeof(Todo))]
-        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Todo))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PostAsync(
             [FromServices] AppDbContext context,
             [FromBody] CreateTodoViewModels model)
@@ -71,8 +73,9 @@ namespace MeuTodo.Controllers
 
         [HttpPut]
         [Route("todos/{id}")]
-        [ProducesResponseType(200, Type = typeof(Todo))]
-        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Todo))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutAsync(
             [FromServices] AppDbContext context,
             [FromBody] CreateTodoViewModels model,
@@ -104,6 +107,7 @@ namespace MeuTodo.Controllers
 
         [HttpDelete]
         [Route("todos/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteAsync(
         [FromServices] AppDbContext context,
         [FromRoute] int id)
